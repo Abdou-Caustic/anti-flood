@@ -16,7 +16,7 @@ $blacklisted = '';
             
             $blacklisted = $_SERVER['REMOTE_ADDR'];
             header('HTTP/1.1 403 Forbidden');
-            fwrite(fopen('blacklist.txt','a'),$blacklisted.'- '.date('Y-m-d h:i:sa'). PHP_EOL);
+            fwrite(fopen('filtre/blacklist.txt','a'),$blacklisted.'- '.date('Y-m-d h:i:sa'). PHP_EOL);
             exit;
          }
  }else{
