@@ -11,9 +11,7 @@
 <?php
 $client = $_SERVER['REMOTE_ADDR'];
 error_reporting(0);
-
-foreach(explode('\n',file_get_contents('filtre/blacklist.txt')) as $F) {
-	echo "<div class=\"container\">
+echo "<div class=\"container\">
   <h2>Ddos attack</h2>
   <p>Blacklisted ips and info</p>            
   <table class=\"table\">
@@ -23,18 +21,19 @@ foreach(explode('\n',file_get_contents('filtre/blacklist.txt')) as $F) {
         <th>action</th>
         
       </tr>
-    </thead>
+    </thead>";
+foreach(file('filtre/blacklist.txt') as $F) {
+echo "	
     <tbody>
       <tr><td>$F</td>
        <td><a class='btn btn-primary' href=cx.php?delete&i=$F>delete from black list </a></td>
-       </tr>
+       </tr>";
+}
+echo "
     </tbody>
   </table>
 </div>
-
 </body>
 </html>";
-}
-
 
  ?>
