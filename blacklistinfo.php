@@ -23,10 +23,15 @@ echo "<div class=\"container\">
       </tr>
     </thead>";
 foreach(file('filtre/blacklist.txt') as $F) {
+$thisp = $_SERVER["SCRIPT_NAME"];
+if (preg_match('/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/', $F, $ip_match)) {
+   $ip =  $ip_match[0];
+}
+
 echo "	
     <tbody>
       <tr><td>$F</td>
-       <td><a class='btn btn-primary' href=cx.php?delete&i=$F>delete from black list </a></td>
+       <td><a class='btn btn-primary' href=$thisp?delete&i=$ip>delete from black list </a></td>
        </tr>";
 }
 echo "
@@ -35,5 +40,23 @@ echo "
 </div>
 </body>
 </html>";
+?>
+<?php 
+if(isset($_GET['delete'])){
+$ip= $_GET['i'];
 
- ?>
+$client = $ip;
+foreach(@file('filtre/blacklist.txt') as $F) {
+	$x = explode('-', $F);
+	if($x[0]==$client) { 
+
+
+$lastd = file_get_contents('filtre/blacklist.txt');
+$lastd = str_replace("$F","",$lastd);
+
+unlink('filtre/blacklist.txt');
+fwrite(fopen('filtre/blacklist.txt','a'),$lastd);
+}
+}
+
+}
